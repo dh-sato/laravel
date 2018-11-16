@@ -1,0 +1,17 @@
+version: 0.0
+os: linux
+files:
+    - source: /
+      destination: /home/webapp/laravelsample
+permissions:
+    - object: /home/webapp/laravelsample
+      pattern: "**"
+      owner: nginx
+      group: nginx
+      mode: 755
+      type:
+        - file
+hooks:
+    BeforeInstall:
+     - location: ./initialize.sh
+       runas: root
