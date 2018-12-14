@@ -9,4 +9,8 @@ phases:
       - composer install
   build:
     commands:
+      - chmod -R 777 vendor
+      - chmod -R 777 storage
+      - cp -p .env.example .env
+      - php artisan key:generate
       - vendor/bin/phpunit
