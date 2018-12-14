@@ -9,4 +9,4 @@ phases:
       - composer install
   build:
     commands:
-      - ./vendor/bin/phpunit
+      - phpunit
