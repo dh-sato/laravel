@@ -3,7 +3,16 @@ version: 0.1
 phases:
   install:
     commands:
-      - sudo apt-get update -y && sudo apt-get install cmake -y
+      - |
+          amazon-linux-extras install php7.2 -y
+          yum install -y php-mbstring php-xml php-bcmath
+
+          curl -sS https://getcomposer.org/installer | php
+          cp composer.phar /usr/local/bin/composer
+          ln -s /usr/local/bin/composer /usr/bin/composer
+
+          yum install -y git
+          yum install -y zip unzip
   pre_build:
     commands:
       - composer install
