@@ -26,8 +26,6 @@ phases:
   build:
     commands:
       - |
-         rm -rf .git .gitignore README.md
-
          if [ ! -e ./vendor ]; then
            composer install
 
