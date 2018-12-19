@@ -25,8 +25,9 @@ phases:
          fi
   build:
     commands:
-      - rm -rf .git .gitignore README.md
       - |
+         rm -rf .git .gitignore README.md
+
          if [ ! -e ./vendor ]; then
            composer install
 
@@ -36,7 +37,7 @@ phases:
            php artisan key:generate
          fi
 
-      - vendor/bin/phpunit
+         vendor/bin/phpunit
 
   post_build:
     commands:
