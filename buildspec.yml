@@ -26,21 +26,22 @@ phases:
   build:
     commands:
       - rm -rf .git .gitignore README.md
-      - if [ ! -e ./vendor ]; then
-         composer install
+      - |
+         if [ ! -e ./vendor ]; then
+           composer install
 
-         chmod -R 777 vendor
-         chmod -R 777 storage
-         cp -p .env.example .env
-         php artisan key:generate
+           chmod -R 777 vendor
+           chmod -R 777 storage
+           cp -p .env.example .env
+           php artisan key:generate
+         fi
 
-        fi
+      - vendor/bin/phpunit
+
   post_build:
     commands:
       - cp composer.lock /tmp
       - tar cf /tmp/vendor.tar vendor
-
-      - vendor/bin/phpunit
 
 artifacts:
   files:
