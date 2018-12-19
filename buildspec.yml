@@ -30,6 +30,7 @@ phases:
       - if [ ! -e ./vendor ]; then chmod -R 777 storage; fi
       - if [ ! -e ./vendor ]; then cp -p .env.example .env; fi
       - if [ ! -e ./vendor ]; then php artisan key:generate; fi
+
       - vendor/bin/phpunit
 
   post_build:
