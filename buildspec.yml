@@ -26,13 +26,11 @@ phases:
   build:
     commands:
       - if [ ! -e ./vendor ]; then composer install; fi
-      - if [ ! -e ./vendor ]; then chmod -R 777 vendor; fi
-      - if [ ! -e ./vendor ]; then chmod -R 777 storage; fi
-      - if [ ! -e ./vendor ]; then cp -p .env.example .env; fi
-      - if [ ! -e ./vendor ]; then php artisan key:generate; fi
-
-   #  - vendor/bin/phpunit
-      - phpunit
+      - chmod -R 777 vendor; fi
+      - chmod -R 777 storage; fi
+      - cp -p .env.example .env; fi
+      - php artisan key:generate; fi
+      - vendor/bin/phpunit
 
   post_build:
     commands:
