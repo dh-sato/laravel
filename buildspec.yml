@@ -25,26 +25,21 @@ phases:
          fi
   build:
     commands:
-      - |
-         if [ ! -e ./vendor ]; then
-           composer install
-
-           chmod -R 777 vendor
-           chmod -R 777 storage
-           cp -p .env.example .env
-           php artisan key:generate
-         fi
-
-         vendor/bin/phpunit
+      - if [ ! -e ./vendor ]; composer install; fi
+      - if [ ! -e ./vendor ]; chmod -R 777 vendor; fi
+      - if [ ! -e ./vendor ]; chmod -R 777 storage; fi
+      - if [ ! -e ./vendor ]; cp -p .env.example .env; fi
+      - if [ ! -e ./vendor ]; php artisan key:generate; fi
+      - vendor/bin/phpunit
 
   post_build:
     commands:
       - cp composer.lock /tmp
       - tar cf /tmp/vendor.tar vendor
 
-artifacts:
-  files:
-    - '**/*'
+#artifacts:
+#  files:
+#    - '**/*'
 cache:
   paths:
     - /tmp/composer.lock
