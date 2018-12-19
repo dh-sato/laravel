@@ -26,7 +26,7 @@ phases:
   build:
     commands:
       - rm -rf .git .gitignore README.md
-      - if [ ! -e ./vendor ]; then composer install --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader; fi
+      - if [ ! -e ./vendor ]; then composer install; fi
   post_build:
     commands:
       - cp composer.lock /tmp
