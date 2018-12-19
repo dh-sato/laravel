@@ -12,7 +12,7 @@ phases:
              tar xf /tmp/vendor.tar
            fi
          fi
-         if [ ! -e ./vendor ]; then
+#         if [ ! -e ./vendor ]; then
            amazon-linux-extras install php7.2 -y
            yum install -y php-mbstring php-xml php-bcmath
 
@@ -22,7 +22,7 @@ phases:
 
            yum install -y git
            yum install -y zip unzip
-         fi
+#         fi
   build:
     commands:
       - if [ ! -e ./vendor ]; then composer install; fi
