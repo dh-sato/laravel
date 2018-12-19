@@ -4,22 +4,44 @@ phases:
   install:
     commands:
       - |
-          amazon-linux-extras install php7.2 -y
-          yum install -y php-mbstring php-xml php-bcmath
+         yum install -y tar
 
-          curl -sS https://getcomposer.org/installer | php
-          cp composer.phar /usr/local/bin/composer
-          ln -s /usr/local/bin/composer /usr/bin/composer
+         if [ -e /tmp/composer.lock ] && [ -e /tmp/vendor.tar ]; then
+           diff /tmp/composer.lock ./composer.lock
+           if [ $? -eq 0 ]; then
+             tar xf /tmp/vendor.tar
+           fi
+         fi
+         if [ ! -e ./vendor ]; then
+           amazon-linux-extras install php7.2 -y
+           yum install -y php-mbstring php-xml php-bcmath
 
-          yum install -y git
-          yum install -y zip unzip
-  pre_build:
-    commands:
-      - composer install
+           curl -sS https://getcomposer.org/installer | php
+           cp composer.phar /usr/local/bin/composer
+           ln -s /usr/local/bin/composer /usr/bin/composer
+
+           yum install -y git
+           yum install -y zip unzip
+         fi
   build:
     commands:
+      - rm -rf .git .gitignore README.md
+      - if [ ! -e ./vendor ]; then composer install --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader; fi
+  post_build:
+    commands:
+      - cp composer.lock /tmp
+      - tar cf /tmp/vendor.tar vendor
+
       - chmod -R 777 vendor
       - chmod -R 777 storage
       - cp -p .env.example .env
       - php artisan key:generate
       - vendor/bin/phpunit
+
+artifacts:
+  files:
+    - '**/*'
+cache:
+  paths:
+    - /tmp/composer.lock
+    - /tmp/vendor.tar
