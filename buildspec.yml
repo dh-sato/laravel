@@ -31,8 +31,8 @@ phases:
       - if [ ! -e ./vendor ]; then cp -p .env.example .env; fi
       - if [ ! -e ./vendor ]; then php artisan key:generate; fi
 
-      - ENV PATH=$PATH:vendor/bin
-      - vendor/bin/phpunit
+   #  - vendor/bin/phpunit
+      - phpunit
 
   post_build:
     commands:
