@@ -26,6 +26,7 @@ phases:
 #artifacts:
 #  files:
 #    - '**/*'
+
 cache:
   paths:
     - /tmp/composer.lock
