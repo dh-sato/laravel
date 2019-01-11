@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel Hello!!! by shinji
+                    Laravel Hello!!! by shinji add fix issue 03
                 </div>
 
                 <div class="links">
