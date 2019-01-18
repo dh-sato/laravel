@@ -12,7 +12,7 @@ php artisan cache:clear
 composer dump-autoload --optimize
 
 chmod -R 777 ./storage
-chmod -R 777 ./vender
+chmod -R 777 ./vendor
 chown -R nginx. ./*
 
 systemctl restart php-fpm.service
