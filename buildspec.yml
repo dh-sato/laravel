@@ -17,6 +17,10 @@ phases:
       - chmod -R 777 storage
       - cp -p .env.example .env
       - php artisan key:generate
+      
+      - systemctl start mysqld.service
+      - php artisan migrate
+
       - vendor/bin/phpunit
   post_build:
     commands:
