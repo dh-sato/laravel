@@ -10,6 +10,8 @@ php artisan storage:link
 php artisan view:clear
 php artisan cache:clear
 
+composer install
+
 chmod -R 777 ./storage
 chmod -R 777 ./vendor
 chown -R nginx. ./*
