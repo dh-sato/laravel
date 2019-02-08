@@ -9,7 +9,6 @@ php artisan key:generate
 php artisan storage:link
 php artisan view:clear
 php artisan cache:clear
-composer dump-autoload --optimize
 
 chmod -R 777 ./storage
 chmod -R 777 ./vendor
