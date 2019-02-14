@@ -18,8 +18,8 @@ phases:
       - cp -p .env.example .env
       - php artisan key:generate
       
-      - /bin/sh /usr/bin/mysqld_safe --basedir=/usr &
-      - php artisan migrate
+      #- /bin/sh /usr/bin/mysqld_safe --basedir=/usr &
+      #- php artisan migrate
 
       - vendor/bin/phpunit
   post_build:
