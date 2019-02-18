@@ -18,7 +18,7 @@ phases:
       - cp -p .env.example .env
       - php artisan key:generate
 
-      #- mysql -h sjst-db.cluster-cqsa2ksdwcw6.ap-northeast-1.rds.amazonaws.com -u root -pShinshin0122 -e 'select now();'
+      - mysql -h sjst-db.cluster-cqsa2ksdwcw6.ap-northeast-1.rds.amazonaws.com -u root -pShinshin0122 -e 'select now();'
       #- /bin/sh /usr/bin/mysqld_safe --basedir=/usr &
       #- php artisan migrate
 
