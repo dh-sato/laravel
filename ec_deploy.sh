@@ -19,6 +19,7 @@ sudo chmod 2775 ${DEPLOY_PATH}
 sudo find ${DEPLOY_PATH} -type d -exec sudo chmod 2775 {} +
 sudo find ${DEPLOY_PATH} -type f -exec sudo chmod 0664 {} +
 
+# パーミッション変更
 # デプロイ対象外ファイルを用意
 if [ ! -d ./shared/storage ]; then
   sudo cp -arf ./release/storage ./shared/
@@ -26,6 +27,7 @@ if [ ! -d ./shared/storage ]; then
 fi
 
 sudo chmod 777 -R ./release/vendor
+sudo chown -R nginx:nginx ${DEPLOY_PATH}
 
 cd ./release || exit 99
 
