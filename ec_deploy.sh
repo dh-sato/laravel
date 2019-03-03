@@ -3,7 +3,7 @@ DEPLOY_PATH="/home/webapp/laravelsample"
 
 cd ${DEPLOY_PATH} || exit 99
 
-cp -p .env.example .env
+sudo cp -p /home/webapp/.test-env .env
 TIMESTAMP=$(date +%Y%m%d%H%M%S)
 
 # 必要なディレクトリを作成
@@ -12,7 +12,7 @@ sudo mkdir -p "./releases/${TIMESTAMP}"
 
 # 作業ディレクトリにデプロイ
 sudo ln -nfs "${DEPLOY_PATH}/releases/${TIMESTAMP}" ./release
-cp -arf /home/webapp/laravelsample_source/* ./release/
+sudo cp -arf /home/webapp/laravelsample_source/* ./release/
 
 sudo chown -R nginx:nginx ${DEPLOY_PATH}
 sudo chmod 2775 ${DEPLOY_PATH}
