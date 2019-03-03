@@ -3,31 +3,39 @@ DEPLOY_PATH="/home/webapp/laravelsample"
 
 cd ${DEPLOY_PATH} || exit 99
 
+cp -p .env.example .env
 TIMESTAMP=$(date +%Y%m%d%H%M%S)
 
 # 必要なディレクトリを作成
-mkdir -p ./shared
-mkdir -p "./releases/${TIMESTAMP}"
-
+sudo mkdir -p ./shared
+sudo mkdir -p "./releases/${TIMESTAMP}"
 
 # 作業ディレクトリにデプロイ
-ln -nfs "${DEPLOY_PATH}/releases/${TIMESTAMP}" ./release
+sudo ln -nfs "${DEPLOY_PATH}/releases/${TIMESTAMP}" ./release
 cp -arf /home/webapp/laravelsample_source/* ./release/
 
-cp -p .env.example .env
-
-chown -R nginx:nginx ${DEPLOY_PATH}
-chmod 2775 ${DEPLOY_PATH}
-find ${DEPLOY_PATH} -type d -exec sudo chmod 2775 {} +
-find ${DEPLOY_PATH} -type f -exec sudo chmod 0664 {} +
+sudo chown -R nginx:nginx ${DEPLOY_PATH}
+sudo chmod 2775 ${DEPLOY_PATH}
+sudo find ${DEPLOY_PATH} -type d -exec sudo chmod 2775 {} +
+sudo find ${DEPLOY_PATH} -type f -exec sudo chmod 0664 {} +
 
 # デプロイ対象外ファイルを用意
 if [ ! -d ./shared/storage ]; then
-  cp -arf ./release/storage ./shared/
-  chmod 777 -R ./shared/storage
+  sudo cp -arf ./release/storage ./shared/
+  sudo chmod 777 -R ./shared/storage
 fi
 
-chmod 777 -R ./shared/vendor
+sudo chmod 777 -R ./release/vendor
+
+cd ./release || exit 99
+
+# デプロイ対象外ファイルをシンボリックリンク化
+sudo rm -f .env
+sudo ln -nfs ${DEPLOY_PATH}/.env ./.env
+sudo chown -h nginx ./.env
+sudo rm -rf ./storage
+sudo ln -nfs ${DEPLOY_PATH}/shared/storage ./storage
+sudo chown -h nginx ./storage
 
 # 各種コマンド実施
 composer install
@@ -40,22 +48,11 @@ php artisan optimize:clear
 yarn install
 yarn build
 
-# デプロイ対象外ファイルをシンボリックリンク化
-rm -f .env
-ln -nfs ${DEPLOY_PATH}/.env ./.env
-chown -h nginx ./.env
-rm -rf ./storage
-ln -nfs ${DEPLOY_PATH}/shared/storage ./storage
-
-chown -h nginx ./storage
-
 cd ../ || exit 99
 
 # デプロイ実施
-ln -nfs "${DEPLOY_PATH}/releases/${TIMESTAMP}" ./current
-unlink ./release
+sudo ln -nfs "${DEPLOY_PATH}/releases/${TIMESTAMP}" ./current
+sudo unlink ./release
 
-systemctl restart php-fpm.service
-systemctl restart nginx.service
-
-cd ./release || exit 99
+sudo systemctl restart php-fpm.service
+sudo systemctl restart nginx.service
