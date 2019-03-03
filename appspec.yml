@@ -2,9 +2,9 @@ version: 0.0
 os: linux
 files:
     - source: /
-      destination: /home/webapp/laravelsample
+      destination: /home/webapp/laravelsample_source
 permissions:
-    - object: /home/webapp/laravelsample
+    - object: /home/webapp/laravelsample_source
       pattern: "**"
       owner: nginx
       group: nginx
@@ -13,5 +13,5 @@ permissions:
         - file
 hooks:
     AfterInstall:
-     - location: ./initialize.sh
+     - location: ./ec_deploy.sh
        runas: webapp
